@@ -23,10 +23,10 @@ Echo.
 
 set pathVars[1].Name=GamePath
 set pathVars[1].Desc=path to game folder
-set pathVars[3].Name=PythonPath
-set pathVars[3].Desc=path to where Python is installed
-set pathVars[4].Name=CmdPath
-set pathVars[4].Desc=path to where your SteamCMD is located
+set pathVars[2].Name=PythonPath
+set pathVars[2].Desc=path to where Python is installed
+set pathVars[3].Name=CmdPath
+set pathVars[3].Desc=path to where your SteamCMD is located
 
 	for /l %%i in (1 1 100) do (
 		if not defined pathVars[%%i].Name (
