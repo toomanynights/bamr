@@ -244,10 +244,26 @@ set locdirname="%donorPath%localizations\"
 
 	echo.
 	%SystemRoot%\System32\choice.exe /C YN /N /M "It's ready. Now go ahead and pack localizations donor via Storyteller so we can proceed. Ready [Y/N]?"
-	if not errorlevel 2 if errorlevel 1 goto PHASE3
+	if not errorlevel 2 if errorlevel 1 goto PHASE2.6
 	goto PHASE2.5
 	
 	
+:PHASE2.6
+set locFilesList=_localizations.dat _localizations.idx _localizations.str
+set position=1
+
+	for %%3 in (!locFilesList!) do (
+		set fileName="%ModsPath%%modID%%%3"
+		set fileToRename="%ModsPath%%DonorID%%%3"
+		if exist !fileName! (
+			del !fileName!
+		)
+		if exist !fileToRename! (
+			rename !fileToRename! %modID%%%3
+		)
+	)
+
+
 :PHASE3
 set modOutPath=%CmdPath%TWOM\ModsToPublish\%modID%\
 set failedCount=0
@@ -265,8 +281,8 @@ set cleanName=
 	if exist "!modOutPath!" rmdir /S /Q "!modOutPath!"
 	mkdir "!modOutPath!"
 
-	set filesList=%modID%_common.dat %modid%_common.dat_items.dat %modid%_common.idx %modid%_common.str %modid%_textures.dat %modid%_textures.idx %modid%_textures.str %modid%_sounds.dat %modid%_sounds.idx %modid%_sounds.str
-	set filesCleanList=common.dat common.dat_items.dat common.idx common.str textures.dat textures.idx textures.str sounds.dat sounds.idx sounds.str
+	set filesList=%modID%_common.dat %modid%_common.dat_items.dat %modid%_common.idx %modid%_common.str %modid%_textures.dat %modid%_textures.idx %modid%_textures.str %modid%_sounds.dat %modid%_sounds.idx %modid%_sounds.str %modid%_localizations.dat %modid%_localizations.idx %modid%_localizations.str
+	set filesCleanList=common.dat common.dat_items.dat common.idx common.str textures.dat textures.idx textures.str sounds.dat sounds.idx sounds.str localizations.dat localizations.idx localizations.str
 
 	for %%l in (!filesCleanList!) do (
 		set filesCleanArray[!pos!]=%%l
